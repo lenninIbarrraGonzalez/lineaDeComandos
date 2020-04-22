@@ -1,0 +1,246 @@
+ls => listar
+ls -lh => listar de forma humana
+pwd => en donde estoy en mi arbol de directorios
+cd ejercicios => moverse a un directorio
+ls .lha => listar humanamente y si hay archivos ocultos
+cd .. => pasa al archivo padre
+~ => referirme la directorio home
+cd => referirme la directorio home
+crtl + l => clear limpiar pantalla
+cd
+mkdir: crea un directorio
+touch: crea un archivo. Si no existe el archivo lo va a crear, y si existe le cambia la fecha de modificación
+mv: mueve un archivo, te ayuda a modificarlo (puedo cambiar el nombre de una carpeta)
+rm: elimina archivos o links, no funciona para eliminar un directorio, para esto necesitas un poco más
+rm -rf: elimina un directorio recursivamente
+man: es el manual de la terminal, puedes utilizarlo cuando tu quieras 
+     para entender qué hace un comando y sus banderas. Con espacio pasas una página, - con b te regresas una página
+     y con q sales del manual.
+cp: copia un archivo a otros directorios
+pushd y popd: te permiten navegar entre dos directorios fácilmente.
+
+ver el contenido de los archivos
+open => open nombre_archivo  abre el archivo
+more: te da las primeras líneas de lo que hay en el archivo. Para ver la siguiente página hacemos lo mismo que con el man, utilizamos espacio para
+cat: imprime todo el contenido de un archivo en pantalla.
+tail: te muestra las últimas 10 líneas de un archivo. Puedes agregarle un número con el - y pedir más que 10 líneas.
+
+Cada vez que abrimos la terminal en realidad se está ejecutando un programa que se llama .bash_profile que es una serie de comandos que da de alta unas variables.
+
+Todos los ejecutables tienen una serie de permisos. Cada vez que tengo un nuevo programa tengo que asegurarme
+
+alias: ejecuta una serie de comandos que le pasas antes, funciona para crear variables.
+para crear un alias
+alias ll ='ls -lh'
+alias nombreAlias = 'comando + banderas'
+
+crtl + r buscar comandos tecleados
+
+Respuesta a:
+Streams
+Existen Streams de entradas y salidas. Los 3 más importantes son:
+
+Standard Input (STDIN): Todos los valores de entrada
+Standard Output (STDOUT): Todos los valores de salida normales
+Standard Error (STDERR): Todas las salidas con errores
+
+**ejecutable > archivo **: guarda las líneas en el archivo. En caso de existir previamente el archivo, borra todo el contenido y escribe las nuevas líneas.
+
+ejecutable 1> archivoA 2> archivoB : el STDOUT se guarda en archivoA y el STDERR en archivoB
+
+ejecutable >> archivo : concatena el Stream de salida con el contenido de archivo
+
+ejecutable > archivo 2>&1 : guarda el STDERR donde sea que esté guardando el STDOUT
+
+ejecutable < archivo : envía el archivo al ejecutable.
+
+
+Procesos desde la terminal
+Cada vez que ejecutamos algo en nuestra computadora es un proceso que está registrado de alguna forma. 
+El orden en que esto se ejecuta y la cercanía del procesador son muy importantes para las prioridades que
+se le va a dar a dicho proceso.
+
+En esta clase vas a aprender a revisar, manipular y matar los procesos que corren dentro de tu computadora.
+
+top => ver los programas que se estan ejecutando
+kill -9 #numeroID 
+-9 mate el procesos sin preguntar
+
+grep: nos ayuda a encontrar cadenas de caracteres dentro de todos los archivos de la ruta que le demos,
+con expresiones regulares.
+find: busca, dentro del directorio que le digamos.
+
+grep -r . -e platzi
+busca recursivamente aqui la expresión XXXXXX
+
+grep -r files -e while
+
+grep -n -r . -e platzi
+-n muestra en la linea donde se encuentra
+
+grep peliculas.csv -e Comedy
+muestra en el archivo peliculas.csv cuantas tienen Comedy
+
+grep peliculas.csv -e Comedy | wc -l
+cuenta cuantas veces esta comedy en el archivo peliculas.csv
+
+find . -name *.css -type f
+
+buscar en este directorio los archivos de extensión
+css y que sean tipo archivo
+
+find . name *.css .type f | wc -l
+cuenta 
+
+find . -type d
+find . type d | wc -ls
+cuantos directorios
+
+
+curl: emula un navegador. No es un browser como tal,
+hay uno para terminal pero este solo emula los requests
+(peticiones) y los trae.
+zip: agrega o reemplaza las entradas de un archivo zip
+de la lista, que puede incluir el nombre especial para
+comprimir la entrada.
+tar: es un comando similar a zip, junta varios archivos
+en uno solo sin comprimirlos. Después se le dicta un
+algoritmo de compresión, que es zip.
+
+curl https://raw.githubusercontent.com/datasets/airport-codes/master/data/airport-codes.csv
+
+curl https://raw.githubusercontent.com/datasets/airport-codes/master/data/airport-codes.csv > aeropuertos
+
+para comprimir archivos
+zip nombreArchivofinal.zip *css
+
+
+solo para mostar los archivos que contiene
+unzip -vl nombreArchivocomprimido
+
+
+comprimir con tar.gz
+tar cfz varioscsv.tar.gz *csv
+
+Para descomprimir 
+tar xfz varioscsv.tar-gz 
+
+cat aeropuertos.csv | awk -F"::" '{printf("%s\n". $2)}
+
+PIPE
+
+comando uno | comando dos | comando tres
+
+Crontab: Una herramienta para automatizar tareas desde la terminal
+Una de las herramientas más potentes de los sistemas UNIX, que nos permite
+programar la ejecución de diferentes scripts. Con crontab podemos agendar
+todo lo que necesitemos para facilitar nuestro trabajo y automatizar tareas.
+contrab -l despliega el crontab que tenemos instalado. Cada una de las primeras
+5 columnas que tenemos al correr este comando especifica en qué momento exacto
+queremos que se ejecute la tarea que vamos a definir en la sexta columna.
+
+Columna 1: minuto 0-59
+Columna 2: hora 0-23
+Columna 3: día del mes 1-31
+Columna 4: mes 1-12
+Columna 5: día de la semana 0-7 (donde 0 y 7 equivalen a domingo)
+Columna 6: script o comando que queremos que se ejecute
+
+crontab -e: edita las tareas que tengo agendadas. Con la letra i podemos escribir.
+
+Recuerda que el crontab se ejecuta si y solo si la computadora está encendida."
+
+ejemplo 1 columna minutos
+1 en el minuto 1
+1,10,18 en todos estos minutos
+*/5 cada cinco minutos
+1-10
+*
+
+esta mal 
+* 4 * * * script.sh
+#comentario
+1 4 * * * script.sh
+
+0 3 * * 1 script.sh 
+
+https://crontab.guru/
+
+
+Links
+Hay un problema muy común: a veces nos estamos quedando
+sin disco duro y no sabemos qué es lo que nos está 
+quitando tanto espacio. Con el comando du (disk usage)
+vamos a saber, a partir del lugar donde estemos, 
+cuánto espacio en disco ocupa cada nodo.
+Para ahorrar disco duro podemos crear links simbólicos
+o alias, con ln -s.
+
+du
+du -h 
+du -h -d 1 => para ver los directorios y su peso
+
+
+Usuarios y Permisos
+En esta clase vamos a entender los diferentes permisos que puede tener
+cada tipo de usuario dentro de una computadora. 
+La administración de usuarios y permisos cambia mucho 
+entre diferentes sistemas operativos, pero lo que 
+veremos en clase es igual para todos.
+
+whoami: te dice cuál es el usuario que está operando 
+en ese momento.
+
+Tipos de permisos:
+
+r–: permiso de lectura
+rw-: permiso de lels ctura y escritura
+rwx: permiso de lectura, escritura y ejecución
+Los permisos tiene valores numéricos: r = 4, w = 2, x = 1. Entonces para otorgar permisos debemos darle un número que sea la suma de cada una de estas tres letras.
+
+Recuerda que cuando haces ls -l, cuando aparezca el listado, podrás ver al comienzo de cada línea cuáles son los permisos. En primer lugar aparecen los permisos del owner (tú), después los del grupo, y finalmente los de todo el mundo.
+
+-rw-r--r--   1 lennin lennin 255K abr 21 10:17 200.webp
+-rw-rw-r--   1 lennin lennin  13G nov  1 09:55 backupGmailGerencia.zip
+drwxr-xr-x  15 lennin lennin  12K abr 21 10:40 Descargas
+drwxr-xr-x   3 lennin lennin 4,0K mar  2 16:30 Documentos
+drwxrwxr-x   2 lennin lennin 4,0K abr 21 12:27 Downloads
+
+-rw-r--r--
+- : dir/link/file
+rw- : owner dueño del archivo r lectura  w escritura  x ejecucion
+r-- : group grupo
+r-- : anyone
+
+rwx
+421
+
+r-- : 4
+rw- : 6
+r-x : 5
+--x : 1
+-wx : 3
+rwx : 7
+
+---/---/---
+666 : rw-rw-rw-
+
+750 : rwxr-x
+
+para dar permisos a un archivo
+chmod 740 nombreArchivo
+owner todos los permisos
+group leer
+anyone ningun permiso
+
+rwx
+r-x
+r--
+
+652
+rw- r-w 
+
+
+r-x 5
+-w- 
+r-- 4
